@@ -8,4 +8,5 @@ fp.close()
 # for row in csv.reader(f):
 #     print(row[0])
 
-print pt
+#print pt.get_string(fields=["id"])
+print pt[0]
