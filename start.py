@@ -28,7 +28,8 @@ def limit_method(inn):
     input_arr = split_input(inn)
     num_rows = len(entries_arr)
     if "limit" in input_arr and input_arr.index("limit") < len(input_arr) - 1:
-        num_rows = int(input_arr[-1])
+        if input_arr[-1].isdigit() == True:
+            num_rows = int(input_arr[-1])
     return num_rows
 
 #print limit_method("LIMIT 2", pt)
@@ -94,19 +95,24 @@ print "Enter queries in lower or upper case.('SELECT' or 'select', 'Select' also
 while True:
     input_command = raw_input("query>")
     input_method = split_input(input_command)[0]
-
+    if len(split_input(input_command)) > 1:
+        second_param = split_input(input_command)[1]
+    else:
+        second_param = ""
     if input_method == "select":
         print select_columns(input_command)
     elif input_method == "show":
         print show_columns()
     elif input_method == "sum":
-        print sum_column(second_param)
+        if second_param != "":
+            print sum_column(second_param)
+        else:
+            print "After SUM enter column name to sum the integers in it.\nExample:\nSUM id"
     elif input_method == "find":
-        if len(split_input(input_command)) > 1:
-            second_param = split_input(input_command)[1]
+        if second_param != "":
             print find_string(second_param)
         else:
-            print "After FIND Enter string or number to search for.\nExample: FIND '-'\nFIND 'Ki'\nFIND 3"
+            print "After FIND enter string or number to search for.\nExample:\nFIND '-'\nFIND 'Ki'\nFIND 3"
     elif input_command == "exit":
         break
     else:
