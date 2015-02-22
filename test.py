@@ -21,13 +21,13 @@ f.close()
 def split_input(inn):
     for delim in ', "\'':
         inn = inn.replace(delim, ' ')
-    return inn.split()
+    return [el.lower() for el in inn.split()]
 
 #limit method
 def limit_method(inn):
     input_arr = split_input(inn)
     num_rows = len(entries_arr)
-    if "LIMIT" in input_arr and input_arr.index("LIMIT") < len(input_arr) - 1:
+    if "limit" in input_arr and input_arr.index("limit") < len(input_arr) - 1:
         num_rows = int(input_arr[-1])
     return num_rows
 
@@ -87,21 +87,28 @@ def find_string(param):
 
 
 input_command = ""
+count_commands = 0
+
+print "Enter queries in lower or upper case.('SELECT' or 'select', 'Select' also valid)"
 
 while True:
     input_command = raw_input("query>")
     input_method = split_input(input_command)[0]
     if len(split_input(input_command)) > 1:
         second_param = split_input(input_command)[1]
-    if input_method == "SELECT":
+    if input_method == "select":
         print select_columns(input_command)
-    elif input_method == "SHOW":
+    elif input_method == "show":
         print show_columns()
-    elif input_method == "SUM":
+    elif input_method == "sum":
         print sum_column(second_param)
-    elif input_method == "FIND":
+    elif input_method == "find":
         print find_string(second_param)
     elif input_command == "exit":
         break
     else:
         print "Not a valid query.."
+        print "Choose between SELECT, SHOW, SUM or FIND.\nYou can combine SELECT with LIMIT"
+    count_commands = count_commands + 1
+    if count_commands == 10:
+        print "type 'exit' whenever you want to exit the program"
