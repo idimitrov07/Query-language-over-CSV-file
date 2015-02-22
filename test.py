@@ -1,5 +1,6 @@
 import csv
 from prettytable import from_csv
+from prettytable import PrettyTable
 
 fp = open("entries.csv", "r")
 pt = from_csv(fp)
@@ -18,7 +19,7 @@ f.close()
 
 #split input string
 def split_input(inn):
-    for delim in ', ':
+    for delim in ', "\'':
         inn = inn.replace(delim, ' ')
     return inn.split()
 
@@ -42,13 +43,11 @@ def select_columns(inn):
         for col in input_arr:
             if col in entries_arr[0]:
                 fields_arr.append(col)
-        #new_pt = pt.get_string(fields=fields_arr)
         num_rows = limit_method(inn)
         return pt.get_string(fields=fields_arr, start=0, end=num_rows)
 
 
 #print select_columns("SELECT name, hometown LIMIT 4")
-
 
 
 #show available columns
@@ -71,21 +70,38 @@ def sum_column(col):
 
 #print(sum_column('names'))
 
+#find string in table method
+def find_string(param):
+    param = str(param)
+    find_table = PrettyTable(entries_arr[0])
+    x = 1
+    while x < len(entries_arr):
+        for cell in entries_arr[x]:
+            if param in cell:
+                find_table.add_row(entries_arr[x])
+                break
+        x = x + 1
+    return find_table
+
+#print find_string("a")
 
 
+input_command = ""
 
-#print split_input("SELECT   id  ,   LIMIT 1")
-
-# input_command = ""
-#
-# while True:
-#     input_command = raw_input("query>")
-#     #print "query>" + input_command
-#     if input_command == "SELECT":
-#         print pt
-#     elif input_command == "SHOW":
-#         print show_columns()
-#     elif input_command == "exit":
-#         break
-#     else:
-#         print "Not a valid query.."
+while True:
+    input_command = raw_input("query>")
+    input_method = split_input(input_command)[0]
+    if len(split_input(input_command)) > 1:
+        second_param = split_input(input_command)[1]
+    if input_method == "SELECT":
+        print select_columns(input_command)
+    elif input_method == "SHOW":
+        print show_columns()
+    elif input_method == "SUM":
+        print sum_column(second_param)
+    elif input_method == "FIND":
+        print find_string(second_param)
+    elif input_command == "exit":
+        break
+    else:
+        print "Not a valid query.."
