@@ -77,7 +77,7 @@ def find_string(param):
     x = 1
     while x < len(entries_arr):
         for cell in entries_arr[x]:
-            if param in cell:
+            if param in cell.lower():
                 find_table.add_row(entries_arr[x])
                 break
         x = x + 1
@@ -94,8 +94,7 @@ print "Enter queries in lower or upper case.('SELECT' or 'select', 'Select' also
 while True:
     input_command = raw_input("query>")
     input_method = split_input(input_command)[0]
-    if len(split_input(input_command)) > 1:
-        second_param = split_input(input_command)[1]
+
     if input_method == "select":
         print select_columns(input_command)
     elif input_method == "show":
@@ -103,7 +102,11 @@ while True:
     elif input_method == "sum":
         print sum_column(second_param)
     elif input_method == "find":
-        print find_string(second_param)
+        if len(split_input(input_command)) > 1:
+            second_param = split_input(input_command)[1]
+            print find_string(second_param)
+        else:
+            print "After FIND Enter string or number to search for.\nExample: FIND '-'\nFIND 'Ki'\nFIND 3"
     elif input_command == "exit":
         break
     else:
