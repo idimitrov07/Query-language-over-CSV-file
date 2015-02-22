@@ -1,4 +1,11 @@
 == Query language over CSV file program in Python
 
 To start the program:
+
+cd to directory
+
 python start.py
+
+Enter queries: SELECT, SHOW, FIND, SUM. You can combine SELECT and LIMIT
+
+Type 'exit' if you want to exit the program

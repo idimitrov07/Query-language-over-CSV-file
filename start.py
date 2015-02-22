@@ -113,5 +113,7 @@ while True:
         print "Not a valid query.."
         print "Choose between SELECT, SHOW, SUM or FIND.\nYou can combine SELECT with LIMIT"
     count_commands = count_commands + 1
+    if count_commands == 3:
+        print "You can search for lower or upper cases of 'x' with FIND 'x'"
     if count_commands == 10:
         print "type 'exit' whenever you want to exit the program"
