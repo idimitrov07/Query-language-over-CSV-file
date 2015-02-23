@@ -94,7 +94,10 @@ print "Enter queries in lower or upper case.('SELECT' or 'select', 'Select' also
 
 while True:
     input_command = raw_input("query>")
-    input_method = split_input(input_command)[0]
+    if len(input_command) > 0:
+        input_method = split_input(input_command)[0]
+    else:
+        input_method = "empty"
     if len(split_input(input_command)) > 1:
         second_param = split_input(input_command)[1]
     else:
